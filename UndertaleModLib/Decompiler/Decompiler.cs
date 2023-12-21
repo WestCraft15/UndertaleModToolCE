@@ -369,6 +369,12 @@ namespace UndertaleModLib.Decompiler
 
             public override string ToString(DecompileContext context)
             {
+                if (Type == UndertaleInstruction.DataType.Boolean && Value is short v)
+                {
+                    if (v == 0) return "false";
+                    return "true";
+                }
+
                 if (
                     GlobalDecompileContext.PTAutoStates &&
                     AssetType == AssetIDType.PT_State &&
@@ -2465,6 +2471,10 @@ namespace UndertaleModLib.Decompiler
                                             }
                                         }
                                     }
+                                }
+                                else if (instr.Type2 == UndertaleInstruction.DataType.Boolean)
+                                {
+                                    val.Type = UndertaleInstruction.DataType.Boolean;
                                 }
                             }
                             else
